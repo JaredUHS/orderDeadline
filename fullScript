@@ -1,0 +1,56 @@
+const now = new Date();
+  console.log("Now: " + now);
+
+  const getCutoff = (now) => {
+    const YYYY = now.getFullYear();
+    const MM = (now.getMonth()+1).toString().padStart(2, '0');
+    const DD = now.getDate().toString().padStart(2,'0');
+    return new Date(`${YYYY}-${MM}-${DD}T15:30-04:00`);
+}
+
+  const cutoff = getCutoff(now);
+  console.log("Cutoff: " + cutoff);
+  
+// this function returns an object with the HH:MM:SS formatted in a string
+// as well as each one individually. This provides maximum flexibility
+const getCountdown = (now, cutoff) => {
+  
+  // all numbers use `Math.max()` to be sure it's not negative
+  
+  // delta is the difference between the two times, in seconds
+  const delta = Math.floor((cutoff - now) / 1000);
+  console.log("Delta: " + delta);
+  const HH = Math.max(0, Math.floor(delta / (60 * 60))).toString().padStart(2, '0'); 
+  const MM = Math.max(0, Math.floor(delta / 60)).toString().padStart(2, '0'); 
+  const SS = Math.max(0, delta - (HH * 3600) - (MM * 60)).toString().padStart(2, '0');
+  
+  const string = `${HH}:${MM}:${SS}`;
+  
+  return { string, HH, MM, SS }
+}
+  const countdownValue = getCountdown(now, cutoff);
+console.log(getCountdown());
+console.log("Value HH: " + countdownValue[1]);
+console.log("Value MM: " + countdownValue[2]);
+console.log("Value SS: " + countdownValue[3]);
+    $('.js-timer-hours').innerText = countdownValue[1];
+    $('.js-timer-minutes').innerText = countdownValue[2];
+    $('.js-timer-seconds').innerText = countdownValue[3];
+// `$` is a shortcut for d.qS()
+//const $ = (selector) => document.querySelector(selector);
+
+// this function returns the string saying when shipping will be
+const determineShippingDay = (now, cutoff) => {
+  // bool saying if early enough to get same-day shipping
+  const early = now < cutoff;
+  // same day-shipping. Ternary operator comparing to numeric day (0–6 = sun–sat)
+  // Sat order ships on `Monday!`, Sun order ships `Tomorrow`, Mon–Fri ships `Today!`
+  if (early) return now.getDay() === 6 ? 'Monday!' : now.getDay() === 0 ? 'Tomorrow!' : 'Today!';
+  // no same-day shipping: Fri/Sat ships `Monday!`, all other days ship `Tomorrow!`
+  return now.getDay() === 0 || now.getDay() > 4 ? 'Monday!' : 'Tomorrow!'
+}
+
+const shipDay = determineShippingDay(now, cutoff);
+
+$('.timer-date').innerText = shipDay;
+  console.log("Ship Day: " + shipDay);

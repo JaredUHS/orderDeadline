@@ -29,13 +29,13 @@ const getCountdown = (now, cutoff) => {
   return { string, HH, MM, SS }
 }
   const countdownValue = getCountdown(now, cutoff);
-console.log(getCountdown());
-console.log("Value HH: " + countdownValue[1]);
-console.log("Value MM: " + countdownValue[2]);
-console.log("Value SS: " + countdownValue[3]);
-    $('.js-timer-hours').innerText = countdownValue[1];
-    $('.js-timer-minutes').innerText = countdownValue[2];
-    $('.js-timer-seconds').innerText = countdownValue[3];
+console.log(getCountdown(now, cutoff));
+console.log("Value HH: " + countdownValue.HH);
+console.log("Value MM: " + countdownValue.MM);
+console.log("Value SS: " + countdownValue.SS);
+    $('.js-timer-hours').innerText = countdownValue.HH;
+    $('.js-timer-minutes').innerText = countdownValue.MM;
+    $('.js-timer-seconds').innerText = countdownValue.SS;
 // `$` is a shortcut for d.qS()
 //const $ = (selector) => document.querySelector(selector);
 

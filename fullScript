@@ -1,3 +1,9 @@
+  const tick = () => {
+    // `$` is a shortcut for d.qS()
+    const $ = (selector) => document.querySelector(selector);
+
+
+
 const now = new Date();
   console.log("Now: " + now);
 
@@ -33,11 +39,11 @@ console.log(getCountdown(now, cutoff));
 console.log("Value HH: " + countdownValue.HH);
 console.log("Value MM: " + countdownValue.MM);
 console.log("Value SS: " + countdownValue.SS);
+    
     $('.js-timer-hours').innerText = countdownValue.HH;
     $('.js-timer-minutes').innerText = countdownValue.MM;
     $('.js-timer-seconds').innerText = countdownValue.SS;
-// `$` is a shortcut for d.qS()
-//const $ = (selector) => document.querySelector(selector);
+
 
 // this function returns the string saying when shipping will be
 const determineShippingDay = (now, cutoff) => {
@@ -54,3 +60,7 @@ const shipDay = determineShippingDay(now, cutoff);
 
 $('.timer-date').innerText = shipDay;
   console.log("Ship Day: " + shipDay);
+    setTimeout(tick, 1000);
+  }
+  
+  document.addEventListener('DOMContentLoaded', tick);
